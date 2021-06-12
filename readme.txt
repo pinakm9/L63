@@ -1,0 +1,1 @@
+Some experiments with chaotic Lorenz 63 with particle filters, investigating stability
