@@ -238,7 +238,7 @@ def composition(sim_components, probabilties):
         probabilties: a discrete probability distribution
 
     Returns:
-     the generated sample
+        the generated sample
     """
     return sim_components[np.random.choice(len(sim_components), p = probabilties)].algorithm()
 
