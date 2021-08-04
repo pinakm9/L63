@@ -16,7 +16,7 @@ class AsmlWidget:
         attractor: array of attractor points
         data: handle to assimilation file
     """
-    def __init__(self, asml_file_path, dims=[0, 1], hidden_file_path=None, attractor_path=None, max_attractor_pts=5000):
+    def __init__(self, asml_file_path, dims=[0, 1], hidden_file_path=None, attractor_path=None, max_attractor_pts=3000):
         self.asml_file_path = asml_file_path
         self.dims = dims
         self.attractor_path = attractor_path
