@@ -1,2 +1,2 @@
 *.h5
-!config_3_seed_3#0/.*h5
+!config_3_seed_3#0/*.h5
