@@ -90,9 +90,10 @@ class PCShapeWidget:
         else:
             self.fig = go.FigureWidget(make_subplots(rows=1, cols=2, subplot_titles=['posterior', 'Gaussian counterpart']))
             self.button.on_click(self.plot_hull_2d)
-            
-        display(self.button, self.asml_step_slider, self.fig)
-        
+        if self.nb_type == 'colab':
+            display(self.button, self.asml_step_slider)
+        else:
+            display(self.button, self.asml_step_slider, self.fig)
     
     def plot_hull_3d(self, button):
         self.fig.data = []
