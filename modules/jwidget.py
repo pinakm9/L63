@@ -97,6 +97,7 @@ class PCShapeWidget:
     
     def plot_hull_3d(self, button):
         self.fig.data = []
+        self.fig.layout.title = 'step = {}'.format(self.asml_step_slider.value)
         X = self.get_ensemble(self.asml_step_slider.value)
         hull = X[ConvexHull(X).vertices]
         self.fig.add_trace(go.Mesh3d(x=hull[:, 0], y=hull[:, 1], z=hull[:, 2], color="blue", opacity=0.4, alphahull=0), row=1, col=1)
@@ -111,6 +112,7 @@ class PCShapeWidget:
 
     def plot_hull_2d(self, button):
         self.fig.data = []
+        self.fig.layout.title = 'step = {}'.format(self.asml_step_slider.value)
         X = self.get_ensemble(self.asml_step_slider.value)
         hull = X[ConvexHull(X).vertices]
         hull = np.append(hull, [hull[0]], axis=0)
