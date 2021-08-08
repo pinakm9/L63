@@ -73,9 +73,10 @@ class PCShapeWidget:
         asml_file_path: path to assimilation file
         data: handle to assimilation file
     """
-    def __init__(self, asml_file_path, dims=[0, 1]):#, fig_size=(10, 5)):
+    def __init__(self, asml_file_path, dims=[0, 1], nb_type='jupyter'):#, fig_size=(10, 5)):
         self.asml_file_path = asml_file_path
         self.dims = dims
+        self.nb_type = nb_type
         #self.fig_size = fig_size
         self.data = tables.open_file(self.asml_file_path, 'r')
         self.observation = np.array(self.data.root.observation.read().tolist())
@@ -104,7 +105,8 @@ class PCShapeWidget:
         X = np.random.multivariate_normal(mean, cov, size=X.shape[0])
         hull = X[ConvexHull(X).vertices]
         self.fig.add_trace(go.Mesh3d(x=hull[:, 0], y=hull[:, 1], z=hull[:, 2], color="pink", opacity=0.4, alphahull=0), row=1, col=2)
-        #output = widgets.Output(clear_output=True)
+        if self.nb_type == 'colab':
+            self.fig.show()
 
     def plot_hull_2d(self, button):
         self.fig.data = []
@@ -119,6 +121,8 @@ class PCShapeWidget:
         hull = X[ConvexHull(X).vertices]
         hull = np.append(hull, [hull[0]], axis=0)
         self.fig.add_trace(go.Scatter(x=hull[:, 0], y=hull[:, 1], fillcolor="pink", opacity=0.4, fill='toself'), row=1, col=2)
+        if self.nb_type == 'colab':
+            self.fig.show()
 
     def get_ensemble(self, step):
         return np.array(getattr(self.data.root.particles, 'time_' + str(step)).read().tolist())[:, self.dims]
