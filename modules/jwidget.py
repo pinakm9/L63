@@ -101,12 +101,14 @@ class PCShapeWidget:
         X = self.get_ensemble(self.asml_step_slider.value)
         hull = X[ConvexHull(X).vertices]
         self.fig.add_trace(go.Mesh3d(x=hull[:, 0], y=hull[:, 1], z=hull[:, 2], color="blue", opacity=0.4, alphahull=0), row=1, col=1)
+        self.fig.add_trace(go.Scatter3d(x=X[:, 0], y=X[:, 1], z=X[:, 2], mode='markers'), row=1, col=1)
         mean = np.mean(X, axis=0)
         X = X - mean
         cov = (X.T @ X) / (X.shape[0]-1)
         X = np.random.multivariate_normal(mean, cov, size=X.shape[0])
         hull = X[ConvexHull(X).vertices]
         self.fig.add_trace(go.Mesh3d(x=hull[:, 0], y=hull[:, 1], z=hull[:, 2], color="pink", opacity=0.4, alphahull=0), row=1, col=2)
+        self.fig.add_trace(go.Scatter3d(x=X[:, 0], y=X[:, 1], z=X[:, 2], mode='markers'), row=1, col=2)
         if self.nb_type == 'colab':
             self.fig.show()
 
@@ -117,6 +119,7 @@ class PCShapeWidget:
         hull = X[ConvexHull(X).vertices]
         hull = np.append(hull, [hull[0]], axis=0)
         self.fig.add_trace(go.Scatter(x=hull[:, 0], y=hull[:, 1], fillcolor="blue", opacity=0.4, fill='toself'), row=1, col=1)
+        self.fig.add_trace(go.Scatter(x=X[:, 0], y=X[:, 1], mode='markers'), row=1, col=1)
         mean = np.mean(X, axis=0)
         X = X - mean
         cov = (X.T @ X) / (X.shape[0]-1)
@@ -124,6 +127,7 @@ class PCShapeWidget:
         hull = X[ConvexHull(X).vertices]
         hull = np.append(hull, [hull[0]], axis=0)
         self.fig.add_trace(go.Scatter(x=hull[:, 0], y=hull[:, 1], fillcolor="pink", opacity=0.4, fill='toself'), row=1, col=2)
+        self.fig.add_trace(go.Scatter(x=X[:, 0], y=X[:, 1], mode='markers'), row=1, col=2)
         if self.nb_type == 'colab':
             self.fig.show()
 
