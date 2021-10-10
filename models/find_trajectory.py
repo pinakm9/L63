@@ -18,8 +18,8 @@ import matplotlib.pyplot as plt
 # set random initial point, load the L96_10 model
 np.random.seed(42)
 x0 = np.random.uniform(size=3)
-model, gen_path = Lorenz63_xz.get_model(x0=x0, size=10, obs_gap=0.1)
-length = 10000
+model, gen_path = Lorenz63_xz.get_model(x0=x0, size=10, obs_gap=0.2)
+length = 500
 
 # find a trajectory on the attractor
 total_iters = int(1e5)
@@ -29,4 +29,13 @@ for i in range(int(total_iters/batch_size)):
     hidden_path = gen_path(x0, batch_size)
     x0 = hidden_path[-1]
 
-pd.DataFrame(gen_path(x0, length)).to_csv('attractor_{}.csv'.format(length), header=None, index=None)
+path = gen_path(x0, length)
+pd.DataFrame(path).to_csv('trajectory_2_{}.csv'.format(length), header=None, index=None)
+
+def check_path(path):
+    fig = plt.figure()
+    ax = fig.add_subplot(111, projection='3d')
+    ax.scatter3D(path[:, 0], path[:, 1], path[:, 2])
+    plt.show() 
+
+check_path(path)
